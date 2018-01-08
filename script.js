@@ -75,12 +75,13 @@ var countdown = (function() {
       return days+colon+hours+colon+minutes+colon+seconds;
     }
 
-    function countdowntimer(weekday, newHour, selector) {
-      $(selector).html(getTimes(weekday, newHour)); 
+    function countdowntimer(weekday, newHour, timerSelector, textSelector) {
+      $(timerSelector).html(getTimes(weekday, newHour)); 
+      $(textSelector).html('Counting down to '+weekday+', '+newHour);  // display when it is counting down to - todo: convert to AM and PM
     }
 
-    proto.setup = function(weekday, newHour, selector) {
-      var x = setInterval(function(){countdowntimer(weekday, newHour, selector)}, 1000)
+    proto.setup = function(weekday, newHour, timerSelector,textSelector) {
+      var x = setInterval(function(){countdowntimer(weekday, newHour, timerSelector,textSelector)}, 1000)
     }
 
 
@@ -91,5 +92,5 @@ var countdown = (function() {
 
 $(document).ready(function() {
   var countdownTimer = new countdown();
-  countdownTimer.setup('Monday', 12, '.k_timer'); // weekday to countdown to, hour to coutdown to (0-23), css selector for timer
+  countdownTimer.setup('Monday', 10, '.k_timer', '.k_date'); // weekday to countdown to, hour to coutdown to (0-23), css selector for timer, css selector for text
 });

@@ -4,8 +4,12 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.k_timer {
+.k_timer_wrapper {
   text-align: center;
+  margin: 1em auto;
+}
+
+.k_timer {
   font-size: 2em;
 }
 /*# sourceMappingURL=style.css.map */
