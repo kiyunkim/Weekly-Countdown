@@ -6,16 +6,20 @@ var countdown = (function() {
       weekday,
 
       currentDate = new Date(),
-      currentDayi = currentDate.getDay(), // get index for day of week
-      currentHour = currentDate.getHours(), // get current hour
-      currentMs = currentDate.getTime(), // ms from 1970 to now
-      daysTil, // days until next selected weekday
-      msTil, // ms til next selected weekday from now
+      currentDayi = currentDate.getDay(), // index for current day of week (0-6)
+      currentHour = currentDate.getHours(), // current hour (0-23)
+      currentMs = currentDate.getTime(), // # of ms from 1970 to current date
+
+      newDate, // selected weekday
+      newHour, // hours to countdown to on selected weekday
+
+      daysTil, // # of days until next selected weekday
+      msTil, // # of ms til next selected weekday from current date
       totalmsTil, // ms from 1970 to next selected weekday 
-      newDate,
-      newHour,
-      setTime, // next selected weekday what time ?
+
+      setTime, // # of hours from current ??????
       ms, // re-calc ms til next selected weekday with adjusted time
+
       days,
       hours,
       minutes,
@@ -47,7 +51,7 @@ var countdown = (function() {
       totalmsTil = currentMs + msTil;
 
       newDate = new Date(totalmsTil);
-      setTime = newDate.setHours(newHour,0,0,0);
+      setTime = newDate.setHours(newHour);
       ms = newDate - currentDate; 
       days = Math.floor(ms/(86400000)); // 24 * 60 * 60 * 1000
       hours = Math.floor((ms-(days*86400000)) / 3600000);  // 60 * 60 * 1000
@@ -87,5 +91,5 @@ var countdown = (function() {
 
 $(document).ready(function() {
   var countdownTimer = new countdown();
-  countdownTimer.setup('Monday', 10, '.k_timer'); // weekday to countdown to, hour to coutdown to (0-23), css selector for timer
+  countdownTimer.setup('Monday', 12, '.k_timer'); // weekday to countdown to, hour to coutdown to (0-23), css selector for timer
 });
