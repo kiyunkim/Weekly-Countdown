@@ -39,7 +39,7 @@ var countdown = (function() {
       else if (currentDayi = weekday ) {
         // if today is weekday ..
         // get the current hour and compare to new hour
-        if ( currentHour > newHour) {
+        if ( currentHour >= newHour) {
           daysTil = 7;
         }
         else {
