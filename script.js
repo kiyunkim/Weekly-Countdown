@@ -2,9 +2,10 @@ var countdown = (function() {
   var self = this,
       proto = countdown.prototype,
 
-      weekdays,
+      day,
+      weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
       weekday,
-
+      
       currentDate = new Date(),
       currentDayi = currentDate.getDay(), // index for current day of week (0-6)
       currentHour = currentDate.getHours(), // current hour (0-23)
@@ -35,10 +36,10 @@ var countdown = (function() {
       }
     }
 
-    function getCountdownNum(day, newHour) {
-      currentDate = new Date(),
-      weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
-      weekday = weekdays.indexOf(day.toLowerCase());
+    function getCountdownNum(newHour) {
+      day = $('.dayChoices option:selected').val(),
+      weekday = weekdays.indexOf(day.toLowerCase()),
+      currentDate = new Date();
 
       // how many days til the new weekday?
       if (currentDayi > weekday) {
@@ -67,17 +68,18 @@ var countdown = (function() {
       newDate.setHours(newHour,0,0,0);
       // get # of ms between those dates
       ms = newDate - currentDate; 
-      console.log(newDate)
-      console.log(currentDate)
-      console.log(ms)
+      //console.log(newDate)
+      //console.log(currentDate)
+      //console.log(ms)
 
       // calculate ms into readable values
       days = doubleDigitNum(Math.floor(ms/(86400000))); // 24 * 60 * 60 * 1000
       hours = doubleDigitNum(Math.floor((ms-(days*86400000)) / 3600000)); // 60 * 60 * 1000
       minutes = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)) / 60000)); // 60 * 1000
       seconds = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)-(minutes*60000)) / 1000));
-      
-      return days+colon+hours+colon+minutes+colon+seconds;
+      if (days == NaN){ } else {
+        return days+colon+hours+colon+minutes+colon+seconds;
+      }
     }
 
     function convertTo12Hour(hour) {
@@ -95,14 +97,14 @@ var countdown = (function() {
       }
     }
 
-    function generateCountdown(weekday, newHour, timerSelector, textSelector) {
+    function generateCountdown(newHour, timerSelector, textSelector) {
+      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(newHour));  // display when it is counting down to
       $(timerSelector).html(getCountdownNum(weekday, newHour));  // display timer
-      $(textSelector).html('Counting down to '+weekday+', '+ convertTo12Hour(newHour));  // display when it is counting down to
-
+      
     }
 
-    proto.setup = function(weekday, newHour, timerSelector,textSelector) {
-      var x = setInterval(function(){generateCountdown(weekday, newHour, timerSelector,textSelector)}, 1000)
+    proto.setup = function(newHour, timerSelector,textSelector) {
+      var x = setInterval(function(){generateCountdown(newHour, timerSelector,textSelector)}, 1000)
     }
 
 
@@ -113,5 +115,5 @@ var countdown = (function() {
 
 $(document).ready(function() {
   var countdownTimer = new countdown();
-  countdownTimer.setup('tuesday', 12, '.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
+  countdownTimer.setup(12, '.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
 });
