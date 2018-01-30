@@ -12,8 +12,6 @@ var countdown = (function() {
       currentMs = currentDate.getTime(), // # of ms from 1970 to current date
 
       newDate, // new weekday
-      newHour, // new hour
-      newHour24,
 
       daysTil, // # of days until new weekday
       msTil, // # of ms from current date to new weekday
@@ -88,9 +86,6 @@ var countdown = (function() {
       newDate.setHours(newHour,0,0,0);
       // get # of ms between those dates
       ms = newDate - currentDate; 
-      //console.log(newDate)
-      //console.log(currentDate)
-      //console.log(ms)
 
       // calculate ms into readable values
       days = doubleDigitNum(Math.floor(ms/(86400000))); // 24 * 60 * 60 * 1000
@@ -117,14 +112,14 @@ var countdown = (function() {
       }
     }
 
-    function generateCountdown(newHour, timerSelector, textSelector) {
+    function generateCountdown(timerSelector, textSelector) {
       $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHour) + ' '+ ampmOption);  // display when it is counting down to
-      $(timerSelector).html(getCountdownNum(weekday, newHour));  // display timer
+      $(timerSelector).html(getCountdownNum(inputHour));  // display timer
       
     }
 
-    proto.setup = function(newHour, timerSelector,textSelector) {
-      var x = setInterval(function(){generateCountdown(newHour, timerSelector,textSelector)}, 1000)
+    proto.setup = function(timerSelector,textSelector) {
+      var x = setInterval(function(){generateCountdown(timerSelector,textSelector)}, 1000)
       
     }
 
@@ -136,5 +131,5 @@ var countdown = (function() {
 
 $(document).ready(function() {
   var countdownTimer = new countdown();
-  countdownTimer.setup(12, '.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
+  countdownTimer.setup('.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
 });
