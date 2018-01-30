@@ -26,6 +26,14 @@ var countdown = (function() {
       seconds,
       colon = ' : ';
       
+    // covert into 2 digits
+    function doubleDigitNum(varUnit) {
+      if (varUnit.toString().length < 2) {
+        return '0' + varUnit;
+      } else {
+        return varUnit;
+      }
+    }
 
     function getCountdownNum(day, newHour) {
       currentDate = new Date(),
@@ -34,13 +42,14 @@ var countdown = (function() {
 
       // how many days til the new weekday?
       if (currentDayi > weekday) {
-        daysTil = 8-currentDayi; } 
+        daysTil = 8-currentDayi; 
+      } 
       else if (currentDayi < weekday ) { 
-        daysTil = weekday-currentDayi; }
+        daysTil = weekday-currentDayi;
+      }
       else if (currentDayi = weekday ) {
-        // if today is the same as the new weekday,
-        // get the current hour and see if it's before or after the new hour
-        if ( currentHour >= newHour) {
+        // if today is the same as the new weekday
+        if ( currentHour >= newHour) { // did it pass?
           daysTil = 7;
         }
         else {
@@ -48,25 +57,21 @@ var countdown = (function() {
         }
       }
 
-      // get # of ms from 1970 to new date
+      // get ms from 1970 to new date
       msTil = (daysTil * 24 * 60 * 60 * 1000); 
       totalmsTil = currentMs + msTil;
 
       // calc new date from ms
       newDate = new Date(totalmsTil);
-      newDate.setHours(newHour); // then set it to the new hour
+      // then set it to the new hour
+      newDate.setHours(newHour,0,0,0);
       // get # of ms between those dates
       ms = newDate - currentDate; 
+      console.log(newDate)
+      console.log(currentDate)
+      console.log(ms)
 
-      function doubleDigitNum(varUnit) {
-        if (varUnit.toString().length < 2) {
-          return '0' + varUnit;
-        } else {
-          return varUnit;
-        }
-      }
-      
-      // calculate ms into readable values, use doubleDigitNum() to covert into 2 digits
+      // calculate ms into readable values
       days = doubleDigitNum(Math.floor(ms/(86400000))); // 24 * 60 * 60 * 1000
       hours = doubleDigitNum(Math.floor((ms-(days*86400000)) / 3600000)); // 60 * 60 * 1000
       minutes = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)) / 60000)); // 60 * 1000
@@ -76,13 +81,16 @@ var countdown = (function() {
     }
 
     function convertTo12Hour(hour) {
-      if (hour == 0) {
+      if (hour == 0) { // midnight
+          return 12 + ' am';
+        }
+      if (hour == 12) { // noon
           return 12 + ' pm';
         }
       if (hour > 12 && hour < 24) {
         return (hour-12) + ' pm';
       }
-      if (hour > 0 && hour <= 12) {
+      if (hour > 0 && hour < 12) {
         return hour + ' am';
       }
     }
@@ -105,5 +113,5 @@ var countdown = (function() {
 
 $(document).ready(function() {
   var countdownTimer = new countdown();
-  countdownTimer.setup('Monday', 15, '.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
+  countdownTimer.setup('tuesday', 12, '.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
 });
