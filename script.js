@@ -21,6 +21,9 @@ var countdown = (function() {
 
       ms, // re-calc ms til new weekday with adjusted time
 
+      inputHour,
+      ampmOption,
+
       days,
       hours,
       minutes,
@@ -35,11 +38,28 @@ var countdown = (function() {
         return varUnit;
       }
     }
+    // convert hour input to index number
+    function getHourIndex() {
+      inputHour = parseInt($('#hourInput').val()),
+      ampmOption = $('.ampm option:selected').val();
+
+      if (inputHour == 12) {
+        if (ampmOption == 'pm') {
+          inputHour = 12; // noon
+        } if (ampmOption == 'am') {
+          inputHour = 0; // midnight
+        }
+      }
+      else if (ampmOption == 'pm') {
+        inputHour = inputHour + 12;
+      }
+    }
 
     function getCountdownNum(newHour) {
       day = $('.dayChoices option:selected').val(),
       weekday = weekdays.indexOf(day.toLowerCase()),
       currentDate = new Date();
+      getHourIndex();
 
       // how many days til the new weekday?
       if (currentDayi > weekday) {
@@ -77,34 +97,35 @@ var countdown = (function() {
       hours = doubleDigitNum(Math.floor((ms-(days*86400000)) / 3600000)); // 60 * 60 * 1000
       minutes = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)) / 60000)); // 60 * 1000
       seconds = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)-(minutes*60000)) / 1000));
-      if (days == NaN){ } else {
-        return days+colon+hours+colon+minutes+colon+seconds;
-      }
+      
+      return days+colon+hours+colon+minutes+colon+seconds;
+     
     }
 
     function convertTo12Hour(hour) {
       if (hour == 0) { // midnight
-          return 12 + ' am';
+          return 12;
         }
       if (hour == 12) { // noon
-          return 12 + ' pm';
+          return 12;
         }
       if (hour > 12 && hour < 24) {
-        return (hour-12) + ' pm';
+        return (hour-12);
       }
-      if (hour > 0 && hour < 12) {
-        return hour + ' am';
+      if (hour > 0 && hour <= 12) {
+        return hour;
       }
     }
 
     function generateCountdown(newHour, timerSelector, textSelector) {
-      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(newHour));  // display when it is counting down to
+      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHour) + ' '+ ampmOption);  // display when it is counting down to
       $(timerSelector).html(getCountdownNum(weekday, newHour));  // display timer
       
     }
 
     proto.setup = function(newHour, timerSelector,textSelector) {
       var x = setInterval(function(){generateCountdown(newHour, timerSelector,textSelector)}, 1000)
+      
     }
 
 
