@@ -97,6 +97,7 @@ var countdown = (function() {
      
     }
 
+    // merge this with getHourIndex somehow
     function convertTo12Hour(hour) {
       if (hour == 0) { // midnight
           return 12;
