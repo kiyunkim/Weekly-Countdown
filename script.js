@@ -1,4 +1,4 @@
-var countdown = (function() {
+var countdown = (function(options) {
   var self = this,
       proto = countdown.prototype,
 
@@ -26,7 +26,10 @@ var countdown = (function() {
       hours,
       minutes,
       seconds,
-      colon = ' : ';
+      colon = ' : ',
+      
+      timerSelector = options.timerSelector,
+      textSelector = options.textSelector;
       
     // covert into 2 digits
     function doubleDigitNum(varUnit) {
@@ -54,6 +57,7 @@ var countdown = (function() {
     }
 
     function getCountdownNum(newHour) {
+
       day = $('.dayChoices option:selected').val(),
       weekday = weekdays.indexOf(day.toLowerCase()),
       currentDate = new Date();
@@ -113,15 +117,16 @@ var countdown = (function() {
       }
     }
 
-    function generateCountdown(timerSelector, textSelector) {
+    function updateCountdown() {
       $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHour) + ' '+ ampmOption);  // display when it is counting down to
       $(timerSelector).html(getCountdownNum(inputHour));  // display timer
-      
     }
 
-    proto.setup = function(timerSelector,textSelector) {
-      var x = setInterval(function(){generateCountdown(timerSelector,textSelector)}, 1000)
-      
+    proto.setup = function() {
+      getCountdownNum(inputHour); // init run so numbers dont display as NaN
+      var countDownInterval = setInterval(function(){
+        updateCountdown();
+      }, 1000);
     }
 
 
@@ -131,6 +136,9 @@ var countdown = (function() {
 });
 
 $(document).ready(function() {
-  var countdownTimer = new countdown();
-  countdownTimer.setup('.k_timer', '.k_date'); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
+  var countdownTimer = new countdown({
+    timerSelector: '.k_timer',
+    textSelector: '.k_date'
+  });
+  countdownTimer.setup(); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
 });
