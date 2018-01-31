@@ -3,7 +3,9 @@ var countdown = (function(options) {
       proto = countdown.prototype,
 
       day,
+      // todo: generate below array from html
       weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+        // new Array(),
       weekday,
       
       currentDate = new Date(),
@@ -19,8 +21,10 @@ var countdown = (function(options) {
 
       ms, // re-calc ms til new weekday with adjusted time
 
-      inputHour,
-      ampmOption,
+      inputHour = options.inputHour,
+      inputHourVal,
+      ampmOption = options.ampmOption,
+      ampmOptionVal,
 
       days,
       hours,
@@ -41,18 +45,19 @@ var countdown = (function(options) {
     }
     // convert hour input to index number
     function getHourIndex() {
-      inputHour = parseInt($('#hourInput').val()),
-      ampmOption = $('.ampm option:selected').val();
+      // move these variables
+      inputHourVal = parseInt($(inputHour).val()),
+      ampmOptionVal = $(ampmOption).val();
 
-      if (inputHour == 12) {
-        if (ampmOption == 'pm') {
-          inputHour = 12; // noon
-        } if (ampmOption == 'am') {
-          inputHour = 0; // midnight
+      if (inputHourVal == 12) {
+        if (ampmOptionVal == 'pm') {
+          inputHourVal = 12; // noon
+        } if (ampmOptionVal == 'am') {
+          inputHourVal = 0; // midnight
         }
       }
-      else if (ampmOption == 'pm') {
-        inputHour = inputHour + 12;
+      else if (ampmOptionVal == 'pm') {
+        inputHourVal = inputHourVal + 12;
       }
     }
 
@@ -65,10 +70,10 @@ var countdown = (function(options) {
 
       // how many days til the new weekday?
       if (currentDayi > weekday) {
-        daysTil = 8-currentDayi; 
+        daysTil = 7 - currentDayi + weekday; 
       } 
       else if (currentDayi < weekday ) { 
-        daysTil = weekday-currentDayi;
+        daysTil = weekday - currentDayi;
       }
       else if (currentDayi = weekday ) {
         // if today is the same as the new weekday
@@ -118,12 +123,12 @@ var countdown = (function(options) {
     }
 
     function updateCountdown() {
-      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHour) + ' '+ ampmOption);  // display when it is counting down to
-      $(timerSelector).html(getCountdownNum(inputHour));  // display timer
+      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHourVal) + ' '+ ampmOptionVal);  // display when it is counting down to
+      $(timerSelector).html(getCountdownNum(inputHourVal));  // display timer
     }
 
     proto.setup = function() {
-      getCountdownNum(inputHour); // init run so numbers dont display as NaN
+      getCountdownNum(inputHourVal); // init run so numbers dont display as NaN
       var countDownInterval = setInterval(function(){
         updateCountdown();
       }, 1000);
@@ -138,7 +143,9 @@ var countdown = (function(options) {
 $(document).ready(function() {
   var countdownTimer = new countdown({
     timerSelector: '.k_timer',
-    textSelector: '.k_date'
+    textSelector: '.k_date',
+    inputHour: '#hourInput',
+    ampmOption: '.ampm option:selected'
   });
   countdownTimer.setup(); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
 });
