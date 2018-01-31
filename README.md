@@ -1,2 +1,2 @@
-# Weekly-Countdown
-Counts down to a chosen day of the week at a chosen hour
+# Countdown 
+Simple countdown that counts down to the top of the selected hour, on a selected (next) weekday.
