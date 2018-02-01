@@ -3,7 +3,7 @@ var countdown = (function(options) {
       proto = countdown.prototype,
 
       day,
-      // todo: generate below array from html
+      // TODO: generate below array from html
       weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
         // new Array(),
       weekday,
