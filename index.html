@@ -10,8 +10,8 @@
 </head>
 
 <body>
-  <div class="k_timer_wrapper">
-    <select class="dayChoices">
+  <div class="wrapper">
+    <select class="dayChoices timer-dropdown">
       <option value="Sunday">Sunday</option>
       <option value="Monday">Monday</option>
       <option value="Tuesday">Tuesday</option>
@@ -20,13 +20,15 @@
       <option value="Friday">Friday</option>
       <option value="Saturday">Saturday</option>
     </select>
-    <input type="number" name="hourInput" id="hourInput" min="1" max="12" step="1" value="12">
-    <select class="ampm">
+    <input type="number" name="hourInput" id="hourInput" class="timer-input" min="1" max="12" step="1" value="12">
+    <select class="ampm timer-dropdown">
       <option value="am">am</option>
       <option value="pm">pm</option>
     </select>
-    <p class="k_timer"><span class="loading">Loading...</span></p>
-    <p class="k_date"></p>
+    <div class="timer-wrapper">
+      <p class="timer"><span class="loading">Loading...</span></p>
+      <p class="date"></p>
+    </div>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

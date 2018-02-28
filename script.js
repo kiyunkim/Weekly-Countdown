@@ -142,8 +142,8 @@ var countdown = (function(options) {
 
 $(document).ready(function() {
   var countdownTimer = new countdown({
-    timerSelector: '.k_timer',
-    textSelector: '.k_date',
+    timerSelector: '.timer',
+    textSelector: '.date',
     inputHour: '#hourInput',
     ampmOption: '.ampm option:selected'
   });
