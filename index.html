@@ -5,31 +5,36 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/png" href="../images/logo.png" />
-  <link rel="stylesheet" href="../css/normalize.min.css">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <div class="wrapper">
-    <select class="dayChoices timer-dropdown">
-      <option value="Sunday">Sunday</option>
-      <option value="Monday">Monday</option>
-      <option value="Tuesday">Tuesday</option>
-      <option value="Wednesday">Wednesday</option>
-      <option value="Thursday">Thursday</option>
-      <option value="Friday">Friday</option>
-      <option value="Saturday">Saturday</option>
-    </select>
-    <input type="number" name="hourInput" id="hourInput" class="timer-input" min="1" max="12" step="1" value="12">
-    <select class="ampm timer-dropdown">
-      <option value="am">am</option>
-      <option value="pm">pm</option>
-    </select>
-    <div class="timer-wrapper">
+  <main class="wrapper">
+    <section class="time">
+      <select class="day-of-week timer-dropdown">
+        <option value="Sunday">Sunday</option>
+        <option value="Monday">Monday</option>
+        <option value="Tuesday">Tuesday</option>
+        <option value="Wednesday">Wednesday</option>
+        <option value="Thursday">Thursday</option>
+        <option value="Friday">Friday</option>
+        <option value="Saturday">Saturday</option>
+      </select>
+      <input type="number" name="hour-input" class="timer-input hour-input" min="1" max="12" step="1" value="12"> :
+      <input type="number" name="minutes" class="timer-input minutes-input" min="0" max="59" step="1" value="00"> :
+      <input type="number" name="seconds" class="timer-input seconds-input" min="0" max="59" step="1" value="00">
+      <select class="ampm timer-dropdown">
+        <option value="am">am</option>
+        <option value="pm">pm</option>
+      </select>      
+    </section>
+
+    <section class="timer-wrapper">
       <p class="timer"><span class="loading">Loading...</span></p>
       <p class="date"></p>
-    </div>
-  </div>
+    </section>
+  </main>
+
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="script.js"></script>

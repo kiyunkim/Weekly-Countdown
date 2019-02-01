@@ -144,7 +144,7 @@ $(document).ready(function() {
   var countdownTimer = new countdown({
     timerSelector: '.timer',
     textSelector: '.date',
-    inputHour: '#hourInput',
+    inputHour: '.hour-input',
     ampmOption: '.ampm option:selected'
   });
   countdownTimer.setup(); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
