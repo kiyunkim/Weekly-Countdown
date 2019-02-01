@@ -11,18 +11,18 @@
 <body>
   <main class="wrapper">
     <section class="time">
-      <select class="day-of-week timer-dropdown">
-        <option value="Sunday">Sunday</option>
-        <option value="Monday">Monday</option>
-        <option value="Tuesday">Tuesday</option>
-        <option value="Wednesday">Wednesday</option>
-        <option value="Thursday">Thursday</option>
-        <option value="Friday">Friday</option>
-        <option value="Saturday">Saturday</option>
+      <select class="day timer-dropdown">
+        <option value="0">Sunday</option>
+        <option value="1">Monday</option>
+        <option value="2">Tuesday</option>
+        <option value="3">Wednesday</option>
+        <option value="4">Thursday</option>
+        <option value="5">Friday</option>
+        <option value="6">Saturday</option>
       </select>
-      <input type="number" name="hour-input" class="timer-input hour-input" min="1" max="12" step="1" value="12"> :
-      <input type="number" name="minutes" class="timer-input minutes-input" min="0" max="59" step="1" value="00"> :
-      <input type="number" name="seconds" class="timer-input seconds-input" min="0" max="59" step="1" value="00">
+      <input type="number" name="hour" class="timer-input hour" min="1" max="12" step="1" value="12"> :
+      <input type="number" name="minutes" class="timer-input minute" min="0" max="59" step="1" value="00"> :
+      <input type="number" name="seconds" class="timer-input second" min="0" max="59" step="1" value="00">
       <select class="ampm timer-dropdown">
         <option value="am">am</option>
         <option value="pm">pm</option>
@@ -30,7 +30,12 @@
     </section>
 
     <section class="timer-wrapper">
-      <p class="timer"><span class="loading">Loading...</span></p>
+      <span class="loading"></span>
+      <p class="timer">
+        <span class="days-left">00</span> : 
+        <span class="hours-left">00</span> :
+        <span class="minutes-left">00</span>    
+      </p>
       <p class="date"></p>
     </section>
   </main>

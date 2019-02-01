@@ -59,6 +59,9 @@ body {
   padding: 0 1em;
   @include box-sizing(border-box);
 }
+.day-of-week {
+  margin-right: 1em;
+}
 .timer-dropdown,
 .timer-input {
   border: 1px solid $border-color;

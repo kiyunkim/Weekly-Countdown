@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <select class="second timer-dropdown">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="0">12</option>
+    </select>
+  <p class="seconds-left"></p>
+  
+
+<script>
+  function countdown() {
+    var now = new Date().getTime();  // amount of ms from 1970 to now
+    var second;
+
+    function test(){
+      second = document.querySelector('.second option:checked');
+      secondVal = second.value;
+      console.log(second);
+      console.log(secondVal);
+      console.log(now);
+
+    }
+
+    function runCountdown() {
+      var interval = setInterval(function() {
+        test();
+      }, 1000);
+    }
+
+    return runCountdown();
+  }
+
+  countdown();
+</script>
+
+</body>
+</html>
