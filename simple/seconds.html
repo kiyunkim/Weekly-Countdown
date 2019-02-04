@@ -25,29 +25,34 @@
   
 
 <script>
-  function countdown() {
-    var now = new Date().getTime();  // amount of ms from 1970 to now
-    var second;
+function countdown() {
+  var now = new Date().getTime();  // amount of ms from 1970 to now
+  var second;
+  var interval;
 
-    function test(){
-      second = document.querySelector('.second option:checked');
-      secondVal = second.value;
-      console.log(second);
-      console.log(secondVal);
-      console.log(now);
+  function test(){
+    second = document.querySelector('.second option:checked');
+    secondVal = parseInt(second.value);
+    console.log(second);
+    console.log(secondVal);
+    console.log(now);
 
+    if (secondVal !== 1) {
+      clearInterval(interval)
     }
-
-    function runCountdown() {
-      var interval = setInterval(function() {
-        test();
-      }, 1000);
-    }
-
-    return runCountdown();
+    
   }
 
-  countdown();
+  function runCountdown() {
+    interval = setInterval(function() {
+      test();
+    }, 1000);
+  }
+
+  return runCountdown();
+}
+
+countdown();
 </script>
 
 </body>
