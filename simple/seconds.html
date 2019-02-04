@@ -47,6 +47,12 @@
     <option value="10">10 am</option>
     <option value="11">11 am</option>
     <option value="12">12 pm</option>
+    <option value="13">1 pm</option>
+    <option value="14">2 pm</option>
+    <option value="15">3 pm</option>
+    <option value="16">4 pm</option>
+    <option value="17">5 pm</option>
+    <option value="18">6 pm</option>
   </select>
 
   <label for="minute">Minute</label>
@@ -184,17 +190,29 @@
 document.querySelector('.time-left').innerHTML = 'loading...';
 
 function countdown(o) {
+  // countdown date
   var day,
       hour,
       minute,
-      second,
-      interval;
+      second;
 
-  var now = new Date().getTime();  // amount of ms from 1970 to now
+  // current date
+  var currentDay,
+      currentHour,
+      currentMinute,
+      currentSecond;
 
-  // get number value for a unit
+
+  var interval;
+
+  
   function getValue(unit) {
+    // get number value for a unit
     return parseInt(document.querySelector(unit).value);
+  }
+
+  function updateHTML(el, val) {
+    el.innerHTML = val;
   }
 
   function loop(){
@@ -202,10 +220,63 @@ function countdown(o) {
     hour = getValue(o.hour);
     minute = getValue(o.minute);
     second = getValue(o.second);
+
+    currentDay = new Date().getDay();
+    currentHour = new Date().getHours();
+    currentMinute = new Date().getMinutes();
+    currentSecond = new Date().getSeconds();
     
+    var daysLeft,
+        hoursLeft,
+        minutesLeft,
+        secondsLeft;
+
+    /* FIX THIS
+    function getTimeLeft() {
+      // if day is today
+      if (currentDay === day) {
+        daysLeft = 0;
+        if (currentHour === hour) {
+          hoursLeft = 0;
+          if (currentMinute === minute) {
+            minutesLeft = 0;
+            if (currentSecond === second) {
+              // time's up!
+              endInterval();
+            }
+          }
+          else if (currentMinute < minute) {
+            hoursLeft = hour - currentHour;
+            daysLeft = 0;
+          }
+        }
+        else if (currentHour < hour) {
+          daysLeft = 0;
+        }
+        else if (currentHour > hour) {
+          daysLeft = 7;
+        }
+      }
+      // if day is later this week
+      else if (currentDay < day) {
+        daysLeft = day - currentDay;
+      }
+      // if day is next week
+      else if (currentDay > day) {
+        daysLeft = 7 - Math.abs(currentDay + day);
+      }
+    }
+    getTimeLeft();
+    */
+   
+    console.log('1: '+day+'   '+currentDay);
+    console.log('2: '+hour+'   '+currentHour);
+    console.log('3: '+minute+'   '+currentMinute);
+    console.log('4: '+second+'   '+currentSecond);
+    console.log('-------')
   }
 
-  function end() {
+  function endInterval() {
     clearInterval(interval);
   }
 
