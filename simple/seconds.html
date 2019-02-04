@@ -4,23 +4,75 @@
   <title>Countdown</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  body {
+    background: #212635;
+  }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+  </style>
 </head>
 
 <body>
-    <select class="second timer-dropdown">
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4</option>
-      <option value="5">5</option>
-      <option value="6">6</option>
-      <option value="7">7</option>
-      <option value="8">8</option>
-      <option value="9">9</option>
-      <option value="10">10</option>
-      <option value="11">11</option>
-      <option value="0">12</option>
-    </select>
+  <label for="hour" class="sr-only">Hour</label>
+  <select id="hour" class="hour timer-dropdown">
+    <option value="0">12 am</option>
+    <option value="1">1 am</option>
+    <option value="2">2 am</option>
+    <option value="3">3 am</option>
+    <option value="4">4 am</option>
+    <option value="5">5 am</option>
+    <option value="6">6 am</option>
+    <option value="7">7 am</option>
+    <option value="8">8 am</option>
+    <option value="9">9 am</option>
+    <option value="10">10 am</option>
+    <option value="11">11 am</option>
+    <option value="12">12 pm</option>
+  </select>
+
+  <label for="minute" class="sr-only">Minute</label>
+  <select id="minute" class="minute timer-dropdown">
+    <option value="0">00</option>
+    <option value="1">01</option>
+    <option value="2">02</option>
+    <option value="3">03</option>
+    <option value="4">04</option>
+    <option value="5">05</option>
+    <option value="6">06</option>
+    <option value="7">07</option>
+    <option value="8">08</option>
+    <option value="9">09</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="0">12</option>
+  </select>
+
+  <label for="second" class="sr-only">Second</label>
+  <select id="second" class="second timer-dropdown">
+    <option value="0">00</option>
+    <option value="1">01</option>
+    <option value="2">02</option>
+    <option value="3">03</option>
+    <option value="4">04</option>
+    <option value="5">05</option>
+    <option value="6">06</option>
+    <option value="7">07</option>
+    <option value="8">08</option>
+    <option value="9">09</option>
+    <option value="10">10</option>
+    <option value="11">11</option>
+    <option value="0">12</option>
+  </select>
+
   <p class="seconds-left"></p>
   
 
@@ -31,16 +83,14 @@ function countdown() {
   var interval;
 
   function test(){
-    second = document.querySelector('.second option:checked');
+    second = document.querySelector('.seconds');
     secondVal = parseInt(second.value);
-    console.log(second);
-    console.log(secondVal);
-    console.log(now);
-
-    if (secondVal !== 1) {
-      clearInterval(interval)
-    }
     
+    console.log(secondVal);
+  }
+
+  function end() {
+    clearInterval(interval);
   }
 
   function runCountdown() {
@@ -52,7 +102,7 @@ function countdown() {
   return runCountdown();
 }
 
-countdown();
+// countdown();
 </script>
 
 </body>
