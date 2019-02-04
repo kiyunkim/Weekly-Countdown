@@ -166,24 +166,28 @@
     <option value="59">59</option>
   </select>
 
-  <p class="seconds-left"></p>
+  <p class="time-left"></p>
   
 
 <script>
+document.querySelector('.time-left').innerHTML = 'loading...';
+
 function countdown(o) {
   var hour,
       minute,
       second,
       interval;
-      
+
   var now = new Date().getTime();  // amount of ms from 1970 to now
 
+  // get number value for a unit
+  function getValue(unit) {
+    return parseInt(document.querySelector(unit).value);
+  }
 
   function loop(){
-    second = document.querySelector(o.second);
-    var secondVal = parseInt(second.value);
+    second = getValue(o.second);
     
-    console.log(secondVal);
   }
 
   function end() {
