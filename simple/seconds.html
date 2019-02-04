@@ -21,6 +21,17 @@
 <body>
   <p>Count down to:</p>
 
+  <label for="day">Day of Week</label>
+  <select id="day" class="day timer-dropdown">
+      <option value="0">Sunday</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option>
+  </select>
+
   <label for="hour">Hour</label>
   <select id="hour" class="hour timer-dropdown">
     <option value="0">12 am</option>
@@ -173,7 +184,8 @@
 document.querySelector('.time-left').innerHTML = 'loading...';
 
 function countdown(o) {
-  var hour,
+  var day,
+      hour,
       minute,
       second,
       interval;
@@ -186,6 +198,9 @@ function countdown(o) {
   }
 
   function loop(){
+    day = getValue(o.day);
+    hour = getValue(o.hour);
+    minute = getValue(o.minute);
     second = getValue(o.second);
     
   }
@@ -204,6 +219,9 @@ function countdown(o) {
 }
 
 countdown({
+  day: '.day option:checked',
+  hour: '.hour option:checked',
+  minute: '.minute option:checked',
   second: '.second option:checked'
 });
 </script>
