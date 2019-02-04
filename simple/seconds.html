@@ -197,11 +197,11 @@ function countdown(o) {
       second;
 
   // current date
-  var currentDay,
+  var currentTime,
+      currentDay,
       currentHour,
       currentMinute,
       currentSecond;
-
 
   var interval;
 
@@ -221,6 +221,7 @@ function countdown(o) {
     minute = getValue(o.minute);
     second = getValue(o.second);
 
+    currentTime = new Date().getTime();
     currentDay = new Date().getDay();
     currentHour = new Date().getHours();
     currentMinute = new Date().getMinutes();
@@ -231,49 +232,10 @@ function countdown(o) {
         minutesLeft,
         secondsLeft;
 
-    /* FIX THIS
-    function getTimeLeft() {
-      // if day is today
-      if (currentDay === day) {
-        daysLeft = 0;
-        if (currentHour === hour) {
-          hoursLeft = 0;
-          if (currentMinute === minute) {
-            minutesLeft = 0;
-            if (currentSecond === second) {
-              // time's up!
-              endInterval();
-            }
-          }
-          else if (currentMinute < minute) {
-            hoursLeft = hour - currentHour;
-            daysLeft = 0;
-          }
-        }
-        else if (currentHour < hour) {
-          daysLeft = 0;
-        }
-        else if (currentHour > hour) {
-          daysLeft = 7;
-        }
-      }
-      // if day is later this week
-      else if (currentDay < day) {
-        daysLeft = day - currentDay;
-      }
-      // if day is next week
-      else if (currentDay > day) {
-        daysLeft = 7 - Math.abs(currentDay + day);
-      }
-    }
-    getTimeLeft();
-    */
-   
-    console.log('1: '+day+'   '+currentDay);
-    console.log('2: '+hour+'   '+currentHour);
-    console.log('3: '+minute+'   '+currentMinute);
-    console.log('4: '+second+'   '+currentSecond);
-    console.log('-------')
+    // to do:
+    // get miliseconds to subtract
+    // then convert ms to date
+    
   }
 
   function endInterval() {
