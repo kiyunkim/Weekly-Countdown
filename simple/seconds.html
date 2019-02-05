@@ -23,13 +23,13 @@
 
   <label for="day">Day of Week</label>
   <select id="day" class="day timer-dropdown">
-      <option value="0">Sunday</option>
-      <option value="1">Monday</option>
-      <option value="2">Tuesday</option>
-      <option value="3">Wednesday</option>
-      <option value="4">Thursday</option>
-      <option value="5">Friday</option>
-      <option value="6">Saturday</option>
+    <option value="0">Sunday</option>
+    <option value="1">Monday</option>
+    <option value="2">Tuesday</option>
+    <option value="3">Wednesday</option>
+    <option value="4">Thursday</option>
+    <option value="5">Friday</option>
+    <option value="6">Saturday</option>
   </select>
 
   <label for="hour">Hour</label>
@@ -183,12 +183,16 @@
     <option value="59">59</option>
   </select>
 
-  <p class="time-left"></p>
+  <p class="loading-message">Loading...</p>
+  <p class="time-left">
+    <span class="days-left">00</span> :
+    <span class="hours-left">00</span> :
+    <span class="minutes-left">00</span> :
+    <span class="seconds-left">00</span>
+  </p>
   
 
 <script>
-document.querySelector('.time-left').innerHTML = 'loading...';
-
 function countdown(o) {
   // countdown date
   var day,
@@ -208,6 +212,11 @@ function countdown(o) {
 
   var interval;
 
+  var $days = document.querySelector(o.$days),
+      $hours = document.querySelector(o.$hours),
+      $minutes = document.querySelector(o.$minutes),
+      $seconds = document.querySelector(o.$seconds),
+      $loading = document.querySelector(o.$loading);
   
   function getValue(unit) {
     // get number value for a unit
@@ -286,14 +295,17 @@ function countdown(o) {
     minutesLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)) / 60000)); // 60 * 1000
     secondsLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)-(minutesLeft*60000)) / 1000));
 
-    if (timeTil <= 0) {
-      updateHTML(document.querySelector('.time-left'), 'DONE');
+    updateHTML($loading, '');
+    updateHTML($days, daysLeft);
+    updateHTML($hours, hoursLeft);
+    updateHTML($minutes, minutesLeft);
+    updateHTML($seconds, secondsLeft);
+
+    // reset once it gets to 0
+    if (timeTil === 0) {
       endInterval();
       runCountdown();
     }
-    console.log(timeTil);
-    console.log(daysLeft+' '+hoursLeft+' '+minutesLeft+' '+secondsLeft);
-    
   }
 
   function endInterval() {
@@ -313,7 +325,12 @@ countdown({
   day: '.day option:checked',
   hour: '.hour option:checked',
   minute: '.minute option:checked',
-  second: '.second option:checked'
+  second: '.second option:checked',
+  $days: '.days-left',
+  $hours: '.hours-left',
+  $minutes: '.minutes-left',
+  $seconds: '.seconds-left',
+  $loading: '.loading-message'
 });
 </script>
 
