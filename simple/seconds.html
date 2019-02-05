@@ -201,7 +201,10 @@ function countdown(o) {
       currentDay,
       currentHour,
       currentMinute,
-      currentSecond;
+      currentSecond,
+      year,
+      month,
+      date;
 
   var interval;
 
@@ -214,6 +217,14 @@ function countdown(o) {
   function updateHTML(el, val) {
     el.innerHTML = val;
   }
+  // make number into 2 digits
+  function doubleDigits(number) {
+    if (number < 10) {
+      return '0' + number;
+    }
+      return number;
+  }
+
 
   function loop(){
     day = getValue(o.day);
@@ -226,15 +237,62 @@ function countdown(o) {
     currentHour = new Date().getHours();
     currentMinute = new Date().getMinutes();
     currentSecond = new Date().getSeconds();
+
+    year = new Date().getFullYear();
+    month = new Date().getMonth();
+    date = new Date().getDate();
     
     var daysLeft,
         hoursLeft,
         minutesLeft,
         secondsLeft;
 
-    // to do:
-    // get miliseconds to subtract
-    // then convert ms to date
+    var diff = day - currentDay;
+
+    // for same day - is it today or next week?
+    if (diff < 0) {
+      daysLeft = 7 + diff;
+    } else if (diff > 0) {
+      daysLeft = diff;
+    } else if (diff === 0) {
+      if (currentHour > hour) {
+        daysLeft = 7;
+      } else if (currentHour < hour) {
+        daysLeft = 0;
+      } else if (currentHour === hour) {
+        if (currentMinute < minute) {
+          daysLeft = 0;
+        } else if (currentMinute > minute) {
+          daysLeft = 7;
+        } else if (currentMinute === minute) {
+          if (currentSecond < second) {
+            daysLeft = 0;
+          } else if (currentSecond > second) {
+            daysLeft = 7;
+          } else if (currentSecond === second) {
+            daysLeft = 0;
+          }
+        }
+      }
+    }
+    
+    var totalTime = new Date(year, month, (date+daysLeft), hour, minute, second).getTime();
+    var msTil = totalTime - currentTime;
+    var timeTil = Math.round(msTil/1000)*1000;
+
+    // calculate ms into readable values
+    daysLeft = doubleDigits(Math.floor(timeTil/(86400000))); // 24 * 60 * 60 * 1000
+    hoursLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)) / 3600000)); // 60 * 60 * 1000
+    minutesLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)) / 60000)); // 60 * 1000
+    secondsLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)-(minutesLeft*60000)) / 1000));
+
+    if (timeTil <= 0) {
+      updateHTML(document.querySelector('.time-left'), 'DONE');
+      endInterval();
+      runCountdown();
+    }
+    console.log(timeTil);
+    console.log(daysLeft+' '+hoursLeft+' '+minutesLeft+' '+secondsLeft);
     
   }
 
