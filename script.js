@@ -40,6 +40,9 @@ function countdown(o) {
       return number;
   }
 
+  function startAtZero() {
+    
+  }
 
   function loop(){
     day = getValue(o.day);
@@ -93,6 +96,14 @@ function countdown(o) {
     
     var totalTime = new Date(year, month, (date+daysLeft), hour, minute, second).getTime();
     var msTil = totalTime - currentTime;
+    var msTilStr = msTil.toString();
+    var msTilStrlast = parseInt(msTilStr.substring(msTilStr.length-4, msTilStr.length));
+
+    console.log(msTilStrlast)
+    if (msTilStrlast < 500) {
+      
+    }
+
     var timeTil = Math.round(msTil/1000)*1000;
 
     // calculate ms into readable values
@@ -123,7 +134,7 @@ function countdown(o) {
   function runCountdown() {
     interval = setInterval(function() {
       loop();
-    }, 1000);
+    }, 1);
   }
 
   return runCountdown();
