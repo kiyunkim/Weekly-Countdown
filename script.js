@@ -1,151 +1,143 @@
-var countdown = (function(options) {
-  var self = this,
-      proto = countdown.prototype,
 
-      day,
-      // TODO: generate below array from html
-      weekdays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
-        // new Array(),
-      weekday,
-      
-      currentDate = new Date(),
-      currentDayi = currentDate.getDay(), // index for current day of week (0-6)
-      currentHour = currentDate.getHours(), // current hour (0-23)
-      currentMs = currentDate.getTime(), // # of ms from 1970 to current date
+function countdown(o) {
+  // countdown date
+  var day,
+      hour,
+      minute,
+      second;
 
-      newDate, // new weekday
+  // current date
+  var currentTime,
+      currentDay,
+      currentHour,
+      currentMinute,
+      currentSecond,
+      year,
+      month,
+      date;
 
-      daysTil, // # of days until new weekday
-      msTil, // # of ms from current date to new weekday
-      totalmsTil, // ms from 1970 to new weekday 
+  var interval;
 
-      ms, // re-calc ms til new weekday with adjusted time
+  var $days = document.querySelector(o.$days),
+      $hours = document.querySelector(o.$hours),
+      $minutes = document.querySelector(o.$minutes),
+      $seconds = document.querySelector(o.$seconds),
+      $loading = document.querySelector(o.$loading);
+  
+  function getValue(unit) {
+    // get number value for a unit
+    return parseInt(document.querySelector(unit).value);
+  }
 
-      inputHour = options.inputHour,
-      inputHourVal,
-      ampmOption = options.ampmOption,
-      ampmOptionVal,
-
-      days,
-      hours,
-      minutes,
-      seconds,
-      colon = ' : ',
-      
-      timerSelector = options.timerSelector,
-      textSelector = options.textSelector;
-      
-    // covert into 2 digits
-    function doubleDigitNum(varUnit) {
-      if (varUnit.toString().length < 2) {
-        return '0' + varUnit;
-      } else {
-        return varUnit;
-      }
+  function updateHTML(el, val) {
+    el.innerHTML = val;
+  }
+  // make number into 2 digits
+  function doubleDigits(number) {
+    if (number < 10) {
+      return '0' + number;
     }
-    // convert hour input to index number
-    function getHourIndex() {
-      // move these variables
-      inputHourVal = parseInt($(inputHour).val()),
-      ampmOptionVal = $(ampmOption).val();
+      return number;
+  }
 
-      if (inputHourVal == 12) {
-        if (ampmOptionVal == 'pm') {
-          inputHourVal = 12; // noon
-        } if (ampmOptionVal == 'am') {
-          inputHourVal = 0; // midnight
+
+  function loop(){
+    day = getValue(o.day);
+    hour = getValue(o.hour);
+    minute = getValue(o.minute);
+    second = getValue(o.second);
+
+    currentTime = new Date().getTime();
+    currentDay = new Date().getDay();
+    currentHour = new Date().getHours();
+    currentMinute = new Date().getMinutes();
+    currentSecond = new Date().getSeconds();
+
+    year = new Date().getFullYear();
+    month = new Date().getMonth();
+    date = new Date().getDate();
+    
+    var daysLeft,
+        hoursLeft,
+        minutesLeft,
+        secondsLeft;
+
+    var diff = day - currentDay;
+
+    // for same day - is it today or next week?
+    if (diff < 0) {
+      daysLeft = 7 + diff;
+    } else if (diff > 0) {
+      daysLeft = diff;
+    } else if (diff === 0) {
+      if (currentHour > hour) {
+        daysLeft = 7;
+      } else if (currentHour < hour) {
+        daysLeft = 0;
+      } else if (currentHour === hour) {
+        if (currentMinute < minute) {
+          daysLeft = 0;
+        } else if (currentMinute > minute) {
+          daysLeft = 7;
+        } else if (currentMinute === minute) {
+          if (currentSecond < second) {
+            daysLeft = 0;
+          } else if (currentSecond > second) {
+            daysLeft = 7;
+          } else if (currentSecond === second) {
+            daysLeft = 0;
+          }
         }
       }
-      else if (ampmOptionVal == 'pm') {
-        inputHourVal = inputHourVal + 12;
-      }
     }
+    
+    var totalTime = new Date(year, month, (date+daysLeft), hour, minute, second).getTime();
+    var msTil = totalTime - currentTime;
+    var timeTil = Math.round(msTil/1000)*1000;
 
-    function getCountdownNum(newHour) {
+    // calculate ms into readable values
+    daysLeft = doubleDigits(Math.floor(timeTil/(86400000))); // 24 * 60 * 60 * 1000
+    hoursLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)) / 3600000)); // 60 * 60 * 1000
+    minutesLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)) / 60000)); // 60 * 1000
+    secondsLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)-(minutesLeft*60000)) / 1000));
 
-      day = $('.dayChoices option:selected').val(),
-      weekday = weekdays.indexOf(day.toLowerCase()),
-      currentDate = new Date();
-      getHourIndex();
+    updateHTML($loading, '');
+    document.querySelector(o.$timer).style.display = '';
 
-      // how many days til the new weekday?
-      if (currentDayi > weekday) {
-        daysTil = 7 - currentDayi + weekday; 
-      } 
-      else if (currentDayi < weekday ) { 
-        daysTil = weekday - currentDayi;
-      }
-      else if (currentDayi = weekday ) {
-        // if today is the same as the new weekday
-        if ( currentHour >= newHour) { // did it pass?
-          daysTil = 7;
-        }
-        else {
-          daysTil = 0;
-        }
-      }
+    updateHTML($days, daysLeft);
+    updateHTML($hours, hoursLeft);
+    updateHTML($minutes, minutesLeft);
+    updateHTML($seconds, secondsLeft);
 
-      // get ms from 1970 to new date
-      msTil = (daysTil * 24 * 60 * 60 * 1000); 
-      totalmsTil = currentMs + msTil;
-
-      // calc new date from ms
-      newDate = new Date(totalmsTil);
-      // then set it to the new hour
-      newDate.setHours(newHour,0,0,0);
-      // get # of ms between those dates
-      ms = newDate - currentDate; 
-
-      // calculate ms into readable values
-      days = doubleDigitNum(Math.floor(ms/(86400000))); // 24 * 60 * 60 * 1000
-      hours = doubleDigitNum(Math.floor((ms-(days*86400000)) / 3600000)); // 60 * 60 * 1000
-      minutes = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)) / 60000)); // 60 * 1000
-      seconds = doubleDigitNum(Math.floor((ms-(days*86400000)-(hours*3600000)-(minutes*60000)) / 1000));
-      
-      return days+colon+hours+colon+minutes+colon+seconds;
-     
+    // reset once it gets to 0
+    if (timeTil === 0) {
+      endInterval();
+      runCountdown();
     }
+  }
 
-    // merge this with getHourIndex somehow
-    function convertTo12Hour(hour) {
-      if (hour == 0) { // midnight
-          return 12;
-        }
-      if (hour == 12) { // noon
-          return 12;
-        }
-      if (hour > 12 && hour < 24) {
-        return (hour-12);
-      }
-      if (hour > 0 && hour <= 12) {
-        return hour;
-      }
-    }
+  function endInterval() {
+    clearInterval(interval);
+  }
 
-    function updateCountdown() {
-      $(textSelector).html('Counting down to '+day+', '+ convertTo12Hour(inputHourVal) + ' '+ ampmOptionVal);  // display when it is counting down to
-      $(timerSelector).html(getCountdownNum(inputHourVal));  // display timer
-    }
+  function runCountdown() {
+    interval = setInterval(function() {
+      loop();
+    }, 1000);
+  }
 
-    proto.setup = function() {
-      getCountdownNum(inputHourVal); // init run so numbers dont display as NaN
-      var countDownInterval = setInterval(function(){
-        updateCountdown();
-      }, 1000);
-    }
+  return runCountdown();
+}
 
-
-  return {
-    setup: self.setup
-  };
-});
-
-$(document).ready(function() {
-  var countdownTimer = new countdown({
-    timerSelector: '.timer',
-    textSelector: '.date',
-    inputHour: '#hourInput',
-    ampmOption: '.ampm option:selected'
-  });
-  countdownTimer.setup(); // weekday to countdown to, hour to countdown to (0-23), css selector for timer, css selector for date
+countdown({
+  day: '.day option:checked',
+  hour: '.hour option:checked',
+  minute: '.minute option:checked',
+  second: '.second option:checked',
+  $timer: '.time-left',
+  $days: '.days-left',
+  $hours: '.hours-left',
+  $minutes: '.minutes-left',
+  $seconds: '.seconds-left',
+  $loading: '.loading-message'
 });

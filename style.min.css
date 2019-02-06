@@ -1,0 +1,1 @@
+@-webkit-keyframes blink{0%{opacity:0.3}50%{opacity:1}}@keyframes blink{0%{opacity:0.3}50%{opacity:1}}body{font-size:16px;line-height:1}.wrapper{max-width:700px}.countdown{font-size:10vw}@media screen and (min-width: 576px){.countdown{font-size:4rem}}.loading-message{opacity:0.3;-webkit-animation:blink 1s infinite;animation:blink 1s infinite}
