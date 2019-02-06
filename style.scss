@@ -92,7 +92,7 @@ body {
     font-size: 2em;
   }
 }
-.loading {
+.loading-message {
   opacity: 0.3;
   @include animation(blink 1s infinite);  
 }

@@ -5,38 +5,185 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" type="image/png" href="../images/logo.png" />
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" type="text/css" href="style.min.css">
 </head>
 
 <body>
   <main class="wrapper">
-    <section class="time">
-      <select class="day timer-dropdown">
-        <option value="0">Sunday</option>
-        <option value="1">Monday</option>
-        <option value="2">Tuesday</option>
-        <option value="3">Wednesday</option>
-        <option value="4">Thursday</option>
-        <option value="5">Friday</option>
-        <option value="6">Saturday</option>
-      </select>
-      <input type="number" name="hour" class="timer-input hour" min="1" max="12" step="1" value="12"> :
-      <input type="number" name="minutes" class="timer-input minute" min="0" max="59" step="1" value="00"> :
-      <input type="number" name="seconds" class="timer-input second" min="0" max="59" step="1" value="00">
-      <select class="ampm timer-dropdown">
-        <option value="am">am</option>
-        <option value="pm">pm</option>
-      </select>      
+  
+
+  <section class="time">
+    <label for="day">Day of Week</label>
+    <select id="day" class="day timer-dropdown">
+      <option value="0">Sunday</option>
+      <option value="1">Monday</option>
+      <option value="2">Tuesday</option>
+      <option value="3">Wednesday</option>
+      <option value="4">Thursday</option>
+      <option value="5">Friday</option>
+      <option value="6">Saturday</option>
+    </select>
+  
+    <label for="hour">Hour</label>
+    <select id="hour" class="hour timer-dropdown">
+      <option value="0">12 am</option>
+      <option value="1">1 am</option>
+      <option value="2">2 am</option>
+      <option value="3">3 am</option>
+      <option value="4">4 am</option>
+      <option value="5">5 am</option>
+      <option value="6">6 am</option>
+      <option value="7">7 am</option>
+      <option value="8">8 am</option>
+      <option value="9">9 am</option>
+      <option value="10">10 am</option>
+      <option value="11">11 am</option>
+      <option value="12">12 pm</option>
+      <option value="13">1 pm</option>
+      <option value="14">2 pm</option>
+      <option value="15">3 pm</option>
+      <option value="16">4 pm</option>
+      <option value="17">5 pm</option>
+      <option value="18">6 pm</option>
+    </select>
+  
+    <label for="minute">Minute</label>
+    <select id="minute" class="minute timer-dropdown">
+      <option value="0">00</option>
+      <option value="1">01</option>
+      <option value="2">02</option>
+      <option value="3">03</option>
+      <option value="4">04</option>
+      <option value="5">05</option>
+      <option value="6">06</option>
+      <option value="7">07</option>
+      <option value="8">08</option>
+      <option value="9">09</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+      <option value="32">32</option>
+      <option value="33">33</option>
+      <option value="34">34</option>
+      <option value="35">35</option>
+      <option value="36">36</option>
+      <option value="37">37</option>
+      <option value="38">38</option>
+      <option value="39">39</option>
+      <option value="40">40</option>
+      <option value="41">41</option>
+      <option value="42">42</option>
+      <option value="43">43</option>
+      <option value="44">44</option>
+      <option value="45">45</option>
+      <option value="46">46</option>
+      <option value="47">47</option>
+      <option value="48">48</option>
+      <option value="49">49</option>
+      <option value="50">50</option>
+      <option value="51">51</option>
+      <option value="52">52</option>
+      <option value="53">53</option>
+      <option value="54">54</option>
+      <option value="55">55</option>
+      <option value="56">56</option>
+      <option value="57">57</option>
+      <option value="58">58</option>
+      <option value="59">59</option>
+    </select>
+    
+    <label for="second">Second</label>
+    <select id="second" class="second timer-dropdown">
+      <option value="0">00</option>
+      <option value="1">01</option>
+      <option value="2">02</option>
+      <option value="3">03</option>
+      <option value="4">04</option>
+      <option value="5">05</option>
+      <option value="6">06</option>
+      <option value="7">07</option>
+      <option value="8">08</option>
+      <option value="9">09</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+      <option value="32">32</option>
+      <option value="33">33</option>
+      <option value="34">34</option>
+      <option value="35">35</option>
+      <option value="36">36</option>
+      <option value="37">37</option>
+      <option value="38">38</option>
+      <option value="39">39</option>
+      <option value="40">40</option>
+      <option value="41">41</option>
+      <option value="42">42</option>
+      <option value="43">43</option>
+      <option value="44">44</option>
+      <option value="45">45</option>
+      <option value="46">46</option>
+      <option value="47">47</option>
+      <option value="48">48</option>
+      <option value="49">49</option>
+      <option value="50">50</option>
+      <option value="51">51</option>
+      <option value="52">52</option>
+      <option value="53">53</option>
+      <option value="54">54</option>
+      <option value="55">55</option>
+      <option value="56">56</option>
+      <option value="57">57</option>
+      <option value="58">58</option>
+      <option value="59">59</option>
+    </select>
     </section>
 
     <section class="timer-wrapper">
-      <span class="loading"></span>
-      <p class="timer">
-        <span class="days-left">00</span> : 
-        <span class="hours-left">00</span> :
-        <span class="minutes-left">00</span>    
-      </p>
-      <p class="date"></p>
+        <p class="loading-message">Loading...</p>
+        <p class="time-left">
+          <span class="days-left">00</span> :
+          <span class="hours-left">00</span> :
+          <span class="minutes-left">00</span> :
+          <span class="seconds-left">00</span>
+        </p>
     </section>
   </main>
 
