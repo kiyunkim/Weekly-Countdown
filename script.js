@@ -102,6 +102,8 @@ function countdown(o) {
     secondsLeft = doubleDigits(Math.floor((timeTil-(daysLeft*86400000)-(hoursLeft*3600000)-(minutesLeft*60000)) / 1000));
 
     updateHTML($loading, '');
+    document.querySelector(o.$timer).style.display = '';
+
     updateHTML($days, daysLeft);
     updateHTML($hours, hoursLeft);
     updateHTML($minutes, minutesLeft);
@@ -132,6 +134,7 @@ countdown({
   hour: '.hour option:checked',
   minute: '.minute option:checked',
   second: '.second option:checked',
+  $timer: '.time-left',
   $days: '.days-left',
   $hours: '.hours-left',
   $minutes: '.minutes-left',
