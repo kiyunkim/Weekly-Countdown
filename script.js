@@ -30,20 +30,18 @@ function countdown(o) {
   }
 
   function updateHTML(el, val) {
+    // update html
     el.innerHTML = val;
   }
-  // make number into 2 digits
+
   function doubleDigits(number) {
+    // make number into 2 digits
     if (number < 10) {
       return '0' + number;
     }
-      return number;
+    return number;
   }
-
-  function startAtZero() {
-    
-  }
-
+  
   function loop(){
     day = getValue(o.day);
     hour = getValue(o.hour);
@@ -96,14 +94,6 @@ function countdown(o) {
     
     var totalTime = new Date(year, month, (date+daysLeft), hour, minute, second).getTime();
     var msTil = totalTime - currentTime;
-    var msTilStr = msTil.toString();
-    var msTilStrlast = parseInt(msTilStr.substring(msTilStr.length-4, msTilStr.length));
-
-    console.log(msTilStrlast)
-    if (msTilStrlast < 500) {
-      
-    }
-
     var timeTil = Math.round(msTil/1000)*1000;
 
     // calculate ms into readable values
@@ -123,21 +113,33 @@ function countdown(o) {
     // reset once it gets to 0
     if (timeTil === 0) {
       endInterval();
-      runCountdown();
+      runInterval();
     }
+  }
+
+  function runInterval() {
+    interval = setInterval(function() {
+      loop();
+    }, 1000);
   }
 
   function endInterval() {
     clearInterval(interval);
   }
 
-  function runCountdown() {
-    interval = setInterval(function() {
-      loop();
-    }, 1);
+  function startCountdown() {
+    var ms = new Date().getTime().toString();
+    var roundMs = parseInt(ms.substring(ms.length-3, ms.length));
+
+    // align with second
+    if (roundMs < 500) {
+      runInterval();
+    } else if (roundMs >= 500) {
+      setTimeout(runInterval, 500);
+    }
   }
 
-  return runCountdown();
+  return startCountdown();
 }
 
 countdown({
